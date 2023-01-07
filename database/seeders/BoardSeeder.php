@@ -37,8 +37,7 @@ class BoardSeeder extends Seeder
         foreach ($boards as $board) {
             $team = User::query()->where('email', $board['owner'])
                 ->firstOr(fn () => User::factory()->create(['email' => $board['owner']]))
-                ->currentTeam()
-                ->first();
+                ->currentTeam;
 
             $board = Board::query()->updateOrCreate([
                 'name' => $board['name'],

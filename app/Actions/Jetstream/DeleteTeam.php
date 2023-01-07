@@ -12,6 +12,10 @@ class DeleteTeam implements DeletesTeams
      */
     public function delete(Team $team): void
     {
-        $team->purge();
+        $team->owner()->where('current_team_id', $team->id)
+            ->update(['current_team_id' => null]);
+
+        $team->users()->where('current_team_id', $team->id)
+            ->update(['current_team_id' => null]);
     }
 }
