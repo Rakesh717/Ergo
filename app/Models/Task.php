@@ -40,4 +40,9 @@ class Task extends Model
     {
         return $this->belongsToThrough(Board::class, Section::class);
     }
+
+    public function team(): BelongsToThrough
+    {
+        return $this->belongsToThrough(Team::class, [Board::class, Section::class]);
+    }
 }

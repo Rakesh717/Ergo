@@ -28,6 +28,8 @@ return new class extends Migration
                 ->onDelete('SET NULL');
             $table->foreignId('section_id')
                 ->constrained('sections', 'id');
+            $table->foreignId('team_id')
+                ->constrained('teams', 'id');
             $table->timestamps();
         });
     }
