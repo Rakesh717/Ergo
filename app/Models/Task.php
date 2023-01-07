@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Znck\Eloquent\Relations\BelongsToThrough;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
@@ -25,13 +26,18 @@ class Task extends Model
         'completed_at' => 'datetime',
     ];
 
-    public function assigner(): BelongsToThrough
+    public function assignee(): BelongsTo
     {
-        return $this->belongsToThrough(User::class, Membership::class, '');
+        return $this->belongsTo(User::class, 'assignee_id');
     }
 
-    public function assignee(): BelongsToThrough
+    public function section(): BelongsTo
     {
-        return $this->belongsToThrough(User::class, Membership::class, 'assignee_id');
+        return $this->belongsTo(Section::class);
+    }
+
+    public function board(): BelongsToThrough
+    {
+        return $this->belongsToThrough(Board::class, Section::class);
     }
 }
