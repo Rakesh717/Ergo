@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Board;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BoardSeeder extends Seeder
@@ -44,6 +43,18 @@ class BoardSeeder extends Seeder
             $board = Board::query()->updateOrCreate([
                 'name' => $board['name'],
                 'team_id' => $team->id,
+            ]);
+
+            $board->sections()->createMany([
+                [
+                    'name' => 'Todo',
+                ],
+                [
+                    'name' => 'In Progress',
+                ],
+                [
+                    'name' => 'Complete',
+                ],
             ]);
         }
     }
