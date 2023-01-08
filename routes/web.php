@@ -35,6 +35,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 
+    Route::post('boards', [BoardController::class, 'store'])->name('boards.store');
     Route::get('boards/{board}', [BoardController::class, 'show'])->name('boards.show');
 
     Route::put('tasks/{task}/update-assignee', UpdateTaskAssigneeController::class)->name('tasks.assignee.update');

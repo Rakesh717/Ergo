@@ -3,13 +3,17 @@ import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import Banner from "@/Components/Banner.vue";
+import BoardFormModal from "@/Components/BoardFormModal.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
+import { PlusIcon } from "@heroicons/vue/24/outline";
 
 defineProps({
     title: String,
 });
+
+const showBoardFormModal = ref(false);
 
 const navigation = [
     {
@@ -80,7 +84,18 @@ const logout = () => {
                         </div>
 
                         <div class="mt-5">
-                            <h2 class="font-bold px-4 text-gray-700">Boards</h2>
+                            <h2
+                                class="font-bold px-4 text-gray-700 flex items-center justify-between"
+                            >
+                                <span>Boards</span>
+
+                                <button
+                                    class="p-2 hover:bg-gray-100 rounded-md"
+                                    @click="showBoardFormModal = true"
+                                >
+                                    <PlusIcon class="w-5 h-5"></PlusIcon>
+                                </button>
+                            </h2>
 
                             <div class="mt-1 space-y-1">
                                 <template
@@ -585,4 +600,9 @@ const logout = () => {
             </div>
         </div>
     </div>
+
+    <BoardFormModal
+        :open="showBoardFormModal"
+        @close="showBoardFormModal = false"
+    />
 </template>

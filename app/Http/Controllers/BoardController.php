@@ -19,4 +19,26 @@ class BoardController extends Controller
             'members' => $user->currentTeam->allUsers(),
         ]);
     }
+
+    public function store(Authenticatable $user)
+    {
+        $board = Board::create([
+            'name' => request('name'),
+            'team_id' => $user->currentTeam->id,
+        ]);
+
+        $board->sections()->createMany([
+            [
+                'name' => 'Todo',
+            ],
+            [
+                'name' => 'In Progress',
+            ],
+            [
+                'name' => 'Complete',
+            ],
+        ]);
+
+        return redirect()->route('boards.show', $board->id);
+    }
 }

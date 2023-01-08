@@ -33,7 +33,7 @@ defineProps({
                             </template>
 
                             <button
-                                class="w-full text-center py-2 hover:bg-gray-50 rounded-md transition"
+                                class="w-full text-center py-2 bg-gray-50 hover:shadow rounded-md transition"
                             >
                                 Add Task
                             </button>
