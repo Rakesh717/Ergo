@@ -99,8 +99,9 @@ function removeAssignee() {
     </Link>
 
     <SelectMember
-        :members="members"
         :show="selectMember"
+        :members="members"
+        :selected="task.assignee"
         :task="task"
         @select="updateAssignee"
         @close="selectMember = false"

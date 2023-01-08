@@ -16,6 +16,7 @@ import {
 const props = defineProps({
     members: Array,
     open: Boolean,
+    selected: Object,
 });
 
 const emit = defineEmits(["select", "close"]);
@@ -36,7 +37,7 @@ const filteredMembers = computed(() =>
 
 function onSelect(member) {
     emit("select", member);
-    emit('close')
+    emit("close");
 }
 </script>
 
@@ -101,6 +102,14 @@ function onSelect(member) {
                                         activeOption && 'sm:h-96',
                                     ]"
                                 >
+                                    <button
+                                        class="block w-full bg-gray-50 hover:bg-gray-100 text-sm transition py-3 rounded-md"
+                                        @click.prevent="onSelect(null)"
+                                        v-if="selected"
+                                    >
+                                        Remove Selected
+                                    </button>
+
                                     <h2
                                         v-if="query === ''"
                                         class="mt-2 mb-4 text-xs font-semibold text-gray-500"

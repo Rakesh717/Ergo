@@ -12,15 +12,20 @@ class UpdateTaskAssigneeController extends Controller
     {
         abort_if($task->board->team_id !== $user->currentTeam->id, 403);
 
-        $assignee = User::where("id", request('assignee_id'))->first();
+        if (request('assignee_id')) {
+            $assignee = User::where("id", request('assignee_id'))->first();
 
-        if (!$assignee || !$assignee->belongsToTeam($user->currentTeam)) {
-            abort(403);
+            if (!$assignee || !$assignee->belongsToTeam($user->currentTeam)) {
+                abort(403);
+            }
+
+            $task->update(['assignee_id' => request('assignee_id')]);
+            
+            // TODO: Send notification to assignee
+        } else {
+            $task->update(['assignee_id' => null]);
         }
 
-        $task->update(['assignee_id' => request('assignee_id')]);
-
-        // TODO: Send notification to assignee
 
         return back();
     }
