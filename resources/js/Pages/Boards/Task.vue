@@ -2,6 +2,8 @@
 import SelectMember from "./SelectMember.vue";
 import { Link, useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
+import DateTimePicker from "./DateTimePicker.vue";
+import { format, parseISO } from "date-fns";
 
 const props = defineProps({
     task: Object,
@@ -11,6 +13,7 @@ const props = defineProps({
 const emit = defineEmits(["update:task"]);
 
 const selectMember = ref(false);
+const showDateTimePicker = ref(false);
 
 function updateAssignee(assignee) {
     useForm({
@@ -18,8 +21,18 @@ function updateAssignee(assignee) {
     }).put(route("tasks.assignee.update", props.task.id));
 }
 
+function updateDueDate(date) {
+    useForm({
+        date,
+    }).put(route("tasks.due.update", props.task.id));
+}
+
 function removeAssignee() {
     task.value.assignee = null;
+}
+
+function formatDueDate(date) {
+    return format(parseISO(date), "MMMM do, yyyy h:mm a");
 }
 </script>
 
@@ -60,9 +73,15 @@ function removeAssignee() {
                     />
                 </button>
                 <button
-                    class="border-2 border-dashed border-gray-300 rounded-full p-1 text-gray-500 hover:text-gray-700 hover:border-gray-700 transition"
+                    :class="
+                        task.due_at
+                            ? ''
+                            : 'border-2 border-dashed border-gray-300 rounded-full p-1 text-gray-500 hover:text-gray-700 hover:border-gray-700 transition'
+                    "
+                    @click.prevent="showDateTimePicker = true"
                 >
                     <svg
+                        v-if="!task.due_at"
                         class="w-4 h-4"
                         fill="none"
                         stroke="currentColor"
@@ -76,6 +95,9 @@ function removeAssignee() {
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                         ></path>
                     </svg>
+                    <p class="hover:bg-gray-50 rounded-md py-2 px-3" v-else>
+                        {{ formatDueDate(task.due_at) }}
+                    </p>
                 </button>
             </div>
 
@@ -106,5 +128,12 @@ function removeAssignee() {
         @select="updateAssignee"
         @close="selectMember = false"
         @removeSelected="removeAssignee"
+    />
+
+    <DateTimePicker
+        :open="showDateTimePicker"
+        :value="task.due_at"
+        @select="updateDueDate"
+        @close="showDateTimePicker = false"
     />
 </template>

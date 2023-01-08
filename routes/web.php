@@ -3,6 +3,7 @@
 use App\Http\Controllers\BoardController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UpdateTaskAssigneeController;
+use App\Http\Controllers\UpdateTaskDueDateController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,4 +38,6 @@ Route::middleware([
     Route::get('boards/{board}', [BoardController::class, 'show'])->name('boards.show');
 
     Route::put('tasks/{task}/update-assignee', UpdateTaskAssigneeController::class)->name('tasks.assignee.update');
+
+    Route::put('tasks/{task}/update-due', UpdateTaskDueDateController::class)->name('tasks.due.update');
 });
