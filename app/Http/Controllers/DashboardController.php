@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
@@ -21,9 +21,9 @@ class DashboardController extends Controller
             ->map(function ($task) {
                 if ($task->due_at) {
                     if (now() > $task->due_at) {
-                        $task->color = "red";
-                    } else if (now()->addDay() > $task->due_at) {
-                        $task->color = "yellow";
+                        $task->color = 'red';
+                    } elseif (now()->addDay() > $task->due_at) {
+                        $task->color = 'yellow';
                     } else {
                         $task->color = null;
                     }

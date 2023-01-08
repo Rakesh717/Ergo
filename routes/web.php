@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\BoardController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UpdateTaskAssigneeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,4 +33,8 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
+
+    Route::get('boards/{board}', [BoardController::class, 'show'])->name('boards.show');
+
+    Route::put('tasks/{task}/update-assignee', UpdateTaskAssigneeController::class)->name('tasks.assignee.update');
 });

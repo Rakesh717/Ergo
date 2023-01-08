@@ -25,12 +25,6 @@ function taskColor(color) {
 
 <template>
     <AppLayout title="My Tasks">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                My Tasks
-            </h2>
-        </template>
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div
@@ -81,7 +75,7 @@ function taskColor(color) {
                                 </td>
                                 <td class="px-3 py-4 text-sm">
                                     <div
-                                        class="inline-block text-white text-center py-2 min-w-[120px] px-5 font-semibold"
+                                        class="inline-block text-white text-center py-2 min-w-[120px] px-5 font-semibold rounded-sm"
                                         :class="sectionColor(task.section.name)"
                                     >
                                         {{ task.section.name }}
@@ -90,7 +84,7 @@ function taskColor(color) {
                                 <td class="px-3 py-4 text-sm">
                                     <Link
                                         href="#"
-                                        class="text-indigo-500 font-bold flex items-center space-x-1"
+                                        class="text-indigo-600 font-bold flex items-center space-x-1"
                                     >
                                         <span>
                                             {{ task.section.board.name }}

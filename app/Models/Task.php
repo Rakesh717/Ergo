@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Znck\Eloquent\Relations\BelongsToThrough;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Znck\Eloquent\Relations\BelongsToThrough;
 
 class Task extends Model
 {
@@ -25,6 +25,15 @@ class Task extends Model
         'due_at' => 'datetime',
         'completed_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'is_completed',
+    ];
+
+    public function getIsCompletedAttribute(): bool
+    {
+        return $this->completed_at ? true : false;
+    }
 
     public function assignee(): BelongsTo
     {

@@ -30,7 +30,9 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
-            if (User::query()->where('email', $user['email'])->exists()) continue;
+            if (User::query()->where('email', $user['email'])->exists()) {
+                continue;
+            }
 
             User::factory()->withPersonalTeam()->create($user);
         }
