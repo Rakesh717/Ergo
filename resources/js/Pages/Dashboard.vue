@@ -83,7 +83,7 @@ function taskColor(color) {
                                 </td>
                                 <td class="px-3 py-4 text-sm">
                                     <Link
-                                        href="#"
+                                        :href="route('boards.show', task.section.board.id)"
                                         class="text-indigo-600 font-bold flex items-center space-x-1"
                                     >
                                         <span>
