@@ -1,15 +1,19 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
+import { ref } from "vue";
+import CreateTask from "./CreateTask.vue";
 import Task from "./Task.vue";
 
 defineProps({
     board: Object,
     members: Array,
 });
+
+const createTaskForSection = ref(null);
 </script>
 
 <template>
-    <AppLayout title="Boards">
+    <AppLayout :title="board.name + `- Board`">
         <div class="py-12">
             <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
                 <div class="overflow-x-scroll flex gap-x-5">
@@ -34,6 +38,7 @@ defineProps({
 
                             <button
                                 class="w-full text-center py-2 bg-gray-50 hover:shadow rounded-md transition"
+                                @click="createTaskForSection = section"
                             >
                                 Add Task
                             </button>
@@ -43,4 +48,10 @@ defineProps({
             </div>
         </div>
     </AppLayout>
+
+    <CreateTask
+        :section="createTaskForSection"
+        :open="createTaskForSection ? true : false"
+        @close="createTaskForSection = null"
+    />
 </template>

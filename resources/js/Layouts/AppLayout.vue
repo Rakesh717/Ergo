@@ -108,7 +108,12 @@ const logout = () => {
                                                 route('boards.show', board.id)
                                             "
                                             :class="[
-                                                'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                                                route().current(
+                                                    'boards.show',
+                                                    board.id
+                                                )
+                                                    ? 'bg-gray-100 text-gray-900'
+                                                    : 'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                                                 'group w-full flex items-center pl-4 py-2 text-sm font-medium rounded-md',
                                             ]"
                                         >

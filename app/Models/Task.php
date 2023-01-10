@@ -19,6 +19,7 @@ class Task extends Model
         'due_at',
         'completed_at',
         'section_id',
+        'team_id',
     ];
 
     protected $casts = [
@@ -50,8 +51,8 @@ class Task extends Model
         return $this->belongsToThrough(Board::class, Section::class);
     }
 
-    public function team(): BelongsToThrough
+    public function team(): BelongsTo
     {
-        return $this->belongsToThrough(Team::class, [Board::class, Section::class]);
+        return $this->belongsTo(Team::class);
     }
 }

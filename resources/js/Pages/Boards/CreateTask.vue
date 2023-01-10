@@ -10,16 +10,17 @@ import { useForm } from "@inertiajs/inertia-vue3";
 
 const emit = defineEmits(["close"]);
 
-defineProps({
+const props = defineProps({
     open: Boolean,
+    section: Object,
 });
 
 const form = useForm({
-    name: "",
+    title: "",
 });
 
-function createBoard() {
-    form.post(route("boards.store"), {
+function createTask() {
+    form.post(route("tasks.store", { section: props.section.id }), {
         onSuccess: () => {
             form.reset();
 
@@ -64,35 +65,33 @@ function createBoard() {
                                 as="h3"
                                 class="font-semibold leading-6 text-gray-900"
                             >
-                                Create Board
+                                Create Task
                             </DialogTitle>
 
                             <form
-                                @submit.prevent="createBoard"
+                                @submit.prevent="createTask"
                                 class="mt-3 space-y-6"
                             >
                                 <div>
                                     <label
-                                        for="board-name"
+                                        for="task-title"
                                         class="block text-sm font-medium text-gray-700"
                                     >
-                                        Name
+                                        Title
                                     </label>
                                     <div class="mt-1">
-                                        <input
-                                            id="board-name"
-                                            name="board-name"
-                                            type="text"
+                                        <textarea
+                                            id="task-title"
                                             required=""
-                                            v-model="form.name"
-                                            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                            v-model="form.title"
+                                            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm resize-none"
                                         />
                                     </div>
                                     <small
                                         class="mt-1 text-red-500"
-                                        v-if="form.errors.name"
+                                        v-if="form.errors.title"
                                     >
-                                        {{ form.errors.name }}
+                                        {{ form.errors.title }}
                                     </small>
                                 </div>
 

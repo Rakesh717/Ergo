@@ -4,6 +4,7 @@ import { Link, useForm } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 import DateTimePicker from "./DateTimePicker.vue";
 import { format, parseISO } from "date-fns";
+import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
     task: Object,
@@ -32,7 +33,15 @@ function removeAssignee() {
 }
 
 function formatDueDate(date) {
-    return format(parseISO(date), "MMMM do, yyyy h:mm a");
+    return format(parseISO(date), "MMM do, yyyy h:mm a");
+}
+
+function toggleComplete() {
+    if (props.task.is_completed) {
+        Inertia.put(route("tasks.mark.uncomplete", props.task.id));
+    } else {
+        Inertia.put(route("tasks.mark.complete", props.task.id));
+    }
 }
 </script>
 
@@ -101,7 +110,15 @@ function formatDueDate(date) {
                 </button>
             </div>
 
-            <button class="text-gray-500 hover:text-green-500">
+            <button
+                :class="[
+                    task.is_completed
+                        ? 'text-green-500 hover:text-green-600'
+                        : 'text-gray-500 hover:text-green-500',
+                    'transition',
+                ]"
+                @click.prevent="toggleComplete"
+            >
                 <svg
                     class="w-5 h-5"
                     fill="none"

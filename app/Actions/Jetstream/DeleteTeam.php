@@ -17,5 +17,7 @@ class DeleteTeam implements DeletesTeams
 
         $team->users()->where('current_team_id', $team->id)
             ->update(['current_team_id' => null]);
+
+        $team->delete();
     }
 }
