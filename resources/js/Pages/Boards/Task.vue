@@ -11,10 +11,6 @@ const props = defineProps({
     members: Array,
 });
 
-console.log(props.task);
-
-const emit = defineEmits(["update:task"]);
-
 const selectMember = ref(false);
 const showDateTimePicker = ref(false);
 
@@ -28,10 +24,6 @@ function updateDueDate(date) {
     useForm({
         date,
     }).put(route("tasks.due.update", props.task.id));
-}
-
-function removeAssignee() {
-    task.value.assignee = null;
 }
 
 function formatDueDate(date) {
@@ -146,7 +138,6 @@ function toggleComplete() {
         :task="task"
         @select="updateAssignee"
         @close="selectMember = false"
-        @removeSelected="removeAssignee"
     />
 
     <DateTimePicker

@@ -4,6 +4,7 @@ use App\Http\Controllers\BoardController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MarkTaskCompleteController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UpdateSectionTasksController;
 use App\Http\Controllers\UpdateTaskAssigneeController;
 use App\Http\Controllers\UpdateTaskDueDateController;
 use Illuminate\Foundation\Application;
@@ -39,6 +40,8 @@ Route::middleware([
 
     Route::post('boards', [BoardController::class, 'store'])->name('boards.store');
     Route::get('boards/{board}', [BoardController::class, 'show'])->name('boards.show');
+
+    Route::post('sections/{section}/tasks-moved', UpdateSectionTasksController::class)->name('sections.tasks.moved');
 
     Route::post('sections/{section}/tasks', [TaskController::class, 'store'])->name('tasks.store');
 

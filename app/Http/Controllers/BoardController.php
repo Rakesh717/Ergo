@@ -12,7 +12,7 @@ class BoardController extends Controller
     {
         abort_if($board->team_id !== $user->currentTeam->id, 403);
 
-        $board->load(['sections.tasks.assignee']);
+        $board->load(['sections.tasks' => fn ($q) => $q->orderBy('sort_number')->with('assignee')]);
 
         return Inertia::render('Boards/Show', [
             'board' => $board,

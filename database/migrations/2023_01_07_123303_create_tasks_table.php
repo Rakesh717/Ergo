@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')
                 ->nullable();
+            $table->integer('sort_number');
             $table->timestamp('due_at')
                 ->nullable();
             $table->timestamp('completed_at')

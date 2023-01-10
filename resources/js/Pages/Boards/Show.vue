@@ -1,16 +1,43 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import CreateTask from "./CreateTask.vue";
 import Task from "./Task.vue";
 import Draggable from "vuedraggable";
+import { Inertia } from "@inertiajs/inertia";
 
-defineProps({
+const props = defineProps({
     board: Object,
     members: Array,
 });
 
+const board = ref(JSON.parse(JSON.stringify(props.board)));
+
 const createTaskForSection = ref(null);
+
+function tasksMoved(section) {
+    if (
+        (props.board.sections.find((s) => section.id == s.id)?.tasks || [])
+            .length > section.tasks.length
+    )
+        return;
+
+    Inertia.post(route("sections.tasks.moved", section.id), {
+        tasks: section.tasks.map((task) => task.id),
+    });
+}
+
+let listener = null;
+
+onMounted(() => {
+    listener = Inertia.on("finish", () => {
+        board.value = JSON.parse(JSON.stringify(props.board));
+    });
+});
+
+onUnmounted(() => {
+    listener();
+});
 </script>
 
 <template>
@@ -30,9 +57,10 @@ const createTaskForSection = ref(null);
                         <div>
                             <Draggable
                                 v-model="section.tasks"
-                                item-key="id"
+                                itemKey="id"
                                 group="tasks"
                                 class="mt-2 h-[calc(100vh-20vh)] overflow-y-scroll border-gray-300 rounded-md p-1 text-sm space-y-5"
+                                @change="tasksMoved(section)"
                             >
                                 <template #item="{ element }">
                                     <div>

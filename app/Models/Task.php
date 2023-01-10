@@ -20,11 +20,13 @@ class Task extends Model
         'completed_at',
         'section_id',
         'team_id',
+        'sort_number',
     ];
 
     protected $casts = [
         'due_at' => 'datetime',
         'completed_at' => 'datetime',
+        'sort_number' => 'integer',
     ];
 
     protected $appends = [
