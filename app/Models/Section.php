@@ -25,4 +25,9 @@ class Section extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function isCompleteSection(): bool
+    {
+        return $this->name === 'Complete';
+    }
 }

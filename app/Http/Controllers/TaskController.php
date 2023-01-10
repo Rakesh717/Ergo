@@ -10,15 +10,17 @@ class TaskController extends Controller
 {
     public function store(Section $section, Authenticatable $user, Request $request)
     {
+        abort_if($section->board->team_id !== $user->currentTeam->id, 403);
+
         $request->validate([
             'title' => ['required', 'string', 'max:255']
         ]);
 
-        abort_if($section->board->team_id !== $user->currentTeam->id, 403);
 
         $task = $section->tasks()->create([
             'title' => $request->get('title'),
-            'team_id' => $user->currentTeam->id
+            'team_id' => $user->currentTeam->id,
+            'completed_at' => $section->isCompleteSection() ? now() : null,
         ]);
 
         return back();
