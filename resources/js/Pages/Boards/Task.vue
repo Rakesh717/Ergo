@@ -11,6 +11,8 @@ const props = defineProps({
     members: Array,
 });
 
+console.log(props.task);
+
 const emit = defineEmits(["update:task"]);
 
 const selectMember = ref(false);
